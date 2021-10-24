@@ -20,19 +20,47 @@ class Query {
           
           });
     }
-    addDepartment(data){
-      db.query(`INSERT INTO department (name) SELECT ${data}`, function (err, results) {
-          console.log(`New department of ${data} added!`);
+    addDepartment(dept){
+      db.query(`INSERT INTO department (name) SELECT ${dept}`, function (err, results) {
+          console.log(`New department of ${dept} added!`);
           
           });
     }
-    selectDeptNames(data){
+    selectDeptNames(){
       db.query('SELECT name FROM department;', function (err, results) {
           return results;
           
           });
     }
-    }    
+    addRole(title, salary, dept){
+      db.query(`INSERT INTO role (title, salary, department_id) SELECT ${title},${salary}, d.id FROM department d WHERE d.name = ${dept}`, function (err, results) {
+        console.log(`New role of ${title} added!`);
+          
+          });
+    }
+  
+    addEmp(first, last, role, mgr){
+      db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id) SELECT ${first},${last}, r.id, ${mgr} FROM role r WHERE r.name = ${role}`, function (err, results) {
+        console.log(`New employee ${first} ${last} added!`);
+          
+          });
+        }
+
+    selectRoleNames(){
+      db.query('SELECT title FROM role;', function (err, results) {
+          return results;
+          
+          });
+    }
+
+    selectEmpNames(){
+      db.query('SELECT id, first_name, last_name FROM employee;', function (err, results) {
+          return results;
+          
+          });
+    }
+}
+    
 
 
 
