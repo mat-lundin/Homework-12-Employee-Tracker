@@ -1,5 +1,6 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
+const Queries = require('./assets/queries')
 
 
 const db = mysql.createConnection(
