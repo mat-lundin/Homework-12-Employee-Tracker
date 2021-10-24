@@ -76,6 +76,20 @@ const initQuestions = [
         choices: Queries.selectEmpNames(),
         when: (answers) => answers.initChoice === 'add a role'
     },
+    {
+        input: 'choice',
+        message: 'Update which employee?',
+        name: 'empToUpdate',
+        choices: Queries.selectEmpNames(),
+        when: (answers) => answers.initChoice === 'update an employee role'
+    },
+    {
+        input: 'choice',
+        message: 'Update employee to which role?',
+        name: 'empNewRole',
+        choices: Queries.selectRoleNames(),
+        when: (answers) => answers.initChoice === 'update an employee role'
+    },
 ]
 
 function prompt(){
@@ -95,7 +109,7 @@ function prompt(){
             } else if (data.initChoice === 'add an employee') {
                 Queries.addEmp(data.empFirst,data.empLast,data.empRole,data.empMgr[0])
             } else if (data.initChoice === 'update an employee role'){
-                
+
             }
         })
 }

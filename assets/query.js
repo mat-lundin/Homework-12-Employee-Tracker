@@ -59,6 +59,12 @@ class Query {
           
           });
     }
+    updateEmpRole(emp,role){
+      db.query('UPDATE employee SET role_id = r.id FROM role r', function (err, results) {
+          return results;
+          
+          });
+    }
 }
     
 
