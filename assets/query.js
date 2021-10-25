@@ -60,7 +60,7 @@ class Query {
           });
     }
     updateEmpRole(emp,role){
-      db.query('UPDATE employee SET role_id = r.id FROM role r', function (err, results) {
+      db.query(`UPDATE employee SET role_id = r.id FROM employee e LEFT JOIN role r ON r.name = ${role} WHERE e.id = ${emp}`, function (err, results) {
           return results;
           
           });
