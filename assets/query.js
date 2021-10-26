@@ -5,8 +5,8 @@ const query = {
     
     selectDepts(db){
         db.query('SELECT * FROM department;', function (err, results) {
-            console.table(results);
-            
+            console.table(results)
+           
             });
     },
     selectRoles(db){
@@ -17,12 +17,13 @@ const query = {
     },
     selectEmps(db){
       db.query('SELECT e.id AS employee_id, e.first_name, e.last_name, r.title, d.name as department, r.salary, m.first_name as manager_first_name, m.last_name as manager_last_name FROM employee e LEFT JOIN role r ON e.role_id = r.id LEFT JOIN department d ON r.department_id = d.id LEFT JOIN employee m ON e.manager_id = m.id;', function (err, results) {
-          console.table(results);
+        console.log("\n")
+        console.table(results);
           
           });
     },
     addDepartment(db,dept){
-      db.query(`INSERT INTO department (name) SELECT ${dept}`, function (err, results) {
+      db.query(`INSERT INTO department (name) VALUES ${dept}`, function (err, results) {
           console.log(`New department of ${dept} added!`);
           
           });
