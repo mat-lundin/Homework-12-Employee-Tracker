@@ -1,6 +1,6 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
-const Queries = require('./assets/query')
+const Query = require('./assets/query');
 
 
 const db = mysql.createConnection(
@@ -12,6 +12,7 @@ const db = mysql.createConnection(
     },
     console.log(`Connected to the company_db database.`)
   );
+//   const deptnames = Query.selectDeptNames(db);
   
   
 //   db.query('SELECT ', function (err, results) {
@@ -20,10 +21,11 @@ const db = mysql.createConnection(
 
 const initQuestions = [
     {
-        input: 'choice',
+        input: 'list',
         message: 'Choose an action!',
+        name: 'initChoice',
         choices: ['view all departments', 'view all roles', 'view all employees', 'add a department', 'add a role', 'add an employee', 'update an employee role'],
-        name: 'initChoice'
+   
     },
     {
         input: 'text',
@@ -44,10 +46,10 @@ const initQuestions = [
         when: (answers) => answers.initChoice === 'add a role'
     },
     {
-        input: 'choice',
+        input: 'list',
         message: 'Select the new role department: ',
         name: 'roleDept',
-        choices: Queries.selectDeptNames(),
+        choices: Query.selectDeptNames(db),
         when: (answers) => answers.initChoice === 'add a role'
     },
     {
@@ -63,31 +65,31 @@ const initQuestions = [
         when: (answers) => answers.initChoice === 'add an employee'
     },
     {
-        input: 'choice',
+        input: 'list',
         message: 'Select the new employee role: ',
         name: 'empRole',
-        choices: Queries.selectRoleNames(),
+        choices: Query.selectRoleNames(db),
         when: (answers) => answers.initChoice === 'add a role'
     },
     {
-        input: 'choice',
+        input: 'list',
         message: 'Select the new employee manager: ',
         name: 'empMgr',
-        choices: Queries.selectEmpNames(),
+        choices: Query.selectEmpNames(db),
         when: (answers) => answers.initChoice === 'add a role'
     },
     {
-        input: 'choice',
+        input: 'list',
         message: 'Update which employee?',
         name: 'empToUpdate',
-        choices: Queries.selectEmpNames(),
+        choices: Query.selectEmpNames(db),
         when: (answers) => answers.initChoice === 'update an employee role'
     },
     {
-        input: 'choice',
+        input: 'list',
         message: 'Update employee to which role?',
         name: 'empNewRole',
-        choices: Queries.selectRoleNames(),
+        choices: Query.selectRoleNames(db),
         when: (answers) => answers.initChoice === 'update an employee role'
     },
 ]
@@ -97,19 +99,21 @@ function prompt(){
         .prompt(initQuestions)
         .then((data) => {
             if (data.initChoice === 'view all departments'){
-                Queries.selectDepts();
+                Queries.selectDepts(db);
             } else if (data.initChoice === 'view all roles'){
-                Queries.selectRoles();
+                Queries.selectRoles(db);
             } else if (data.initChoice === 'view all employees'){
-                Queries.selectEmps();
+                Queries.selectEmps(db);
             } else if (data.initChoice === 'add a department'){
-                Queries.addDepartment(data.deptName);
+                Queries.addDepartment(db,data.deptName);
             } else if (data.initChoice === 'add a role'){
-                Queries.addRole(data.roleName,data.roleSal,data.roleDept)
+                Queries.addRole(db,data.roleName,data.roleSal,data.roleDept)
             } else if (data.initChoice === 'add an employee') {
-                Queries.addEmp(data.empFirst,data.empLast,data.empRole,data.empMgr[0])
+                Queries.addEmp(db,data.empFirst,data.empLast,data.empRole,data.empMgr[0])
             } else if (data.initChoice === 'update an employee role'){
 
             }
-        })
+        prompt()})
 }
+
+prompt();
