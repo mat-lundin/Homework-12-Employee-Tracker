@@ -4,8 +4,9 @@ const query = {
     // }
     
     selectDepts(db){
-        db.query('SELECT * FROM department;', function (err, results) {
-            console.table(results)
+        db.query(`SELECT * FROM department;`, function (err, results) {
+          console.log(`\n`)  
+          console.table(results)
            
             });
     },
@@ -23,7 +24,8 @@ const query = {
           });
     },
     addDepartment(db,dept){
-      db.query(`INSERT INTO department (name) VALUES ${dept}`, function (err, results) {
+      console.log(`type of dept is`, typeof dept)
+      db.query(`INSERT INTO department (name) VALUES (${dept});`, function (err, results) {
           console.log(`New department of ${dept} added!`);
           
           });

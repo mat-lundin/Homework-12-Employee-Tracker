@@ -108,7 +108,7 @@ const initQuestions = [
                 // console.log("Res - q",result)
                 // return  await result
             //    console.table(await result)
-                Query.selectDepts(db))
+                Query.selectDepts(db)
             //    return await result
            // if(selection){
              //  init()
