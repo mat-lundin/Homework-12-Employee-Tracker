@@ -1,7 +1,21 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
+const query = require('./assets/query');
 const Query = require('./assets/query');
+let DeptNames
 
+
+// let selectDeptNames = function(database){
+//     database.query('SELECT name FROM department;', function (err, results) {
+//         // console.log(results)
+//         const arr = []
+//         results.forEach(element => {
+//           arr.push(element.name)
+//         });
+//         // console.log(arr)
+//         return arr;
+        
+//         })};;
 
 const db = mysql.createConnection(
     {
@@ -10,12 +24,25 @@ const db = mysql.createConnection(
         password: 'asdf',
         database: 'company_db'
     });
-db.connect(() => {
+db.connect( async () => {
     console.log(`Connected to the company_db database.`);
+    // selectDeptNames = function(database){
+    //     database.query('SELECT name FROM department;', function (err, results) {
+    //         // console.log(results)
+    //         const arr = []
+    //         results.forEach(element => {
+    //           arr.push(element.name)
+    //         });
+    //         // console.log(arr)
+    //         return arr;
+            
+    //         })};;
+    // console.log('departnames = '+selectDeptNames)
     init();
-}
+})
 
-);
+// let departNames = Query.selectDeptNames(db)
+
 
 //   const deptnames = Query.selectDeptNames(db);
 
@@ -54,7 +81,9 @@ const initQuestions = [
         type: 'list',
         message: 'Select the new role department: ',
         name: 'roleDept',
-        choices: Query.selectDeptNames(db),
+        choices: async () => {await db
+        Query.selectDeptNames},
+        // choices: (answers) =>  {Query.selectDeptNames(db)},
         when: (answers) => answers.initChoice === 'add a role'
     },
     {
@@ -77,21 +106,21 @@ const initQuestions = [
         when: (answers) => answers.initChoice === 'add a role'
     },
     {
-        input: 'list',
+        type: 'list',
         message: 'Select the new employee manager: ',
         name: 'empMgr',
         choices: Query.selectEmpNames(db),
         when: (answers) => answers.initChoice === 'add a role'
     },
     {
-        input: 'list',
+        type: 'list',
         message: 'Update which employee?',
         name: 'empToUpdate',
         choices: Query.selectEmpNames(db),
         when: (answers) => answers.initChoice === 'update an employee role'
     },
     {
-        input: 'list',
+        type: 'list',
         message: 'Update employee to which role?',
         name: 'empNewRole',
         choices: Query.selectRoleNames(db),
@@ -99,21 +128,21 @@ const initQuestions = [
     },
 ]
 
- function init() {
+function init() {
     inquirer
         .prompt(initQuestions)
-        .then( (data) => {
+        .then(async (data) => {
             if (data.initChoice === 'view all departments') {
                 //  let result = await Query.selectDepts(db);
                 // console.log("Res - q",result)
                 // return  await result
-            //    console.table(await result)
-                Query.selectDepts(db)
-            //    return await result
-           // if(selection){
-             //  init()
-           // }
-    
+                //    console.table(await result)
+                await Query.selectDepts(db)
+                //    return await result
+                // if(selection){
+                //  init()
+                // }
+
             } else if (data.initChoice === 'view all roles') {
                 Query.selectRoles(db);
             } else if (data.initChoice === 'view all employees') {
