@@ -44,14 +44,14 @@ const query = {
           });
     },
     addRole(db,title, salary, dept){
-      db.query(`INSERT INTO role (title, salary, department_id) SELECT ${title},${salary}, d.id FROM department d WHERE d.name = ${dept}`, function (err, results) {
+      db.query(`INSERT INTO role (title, salary, department_id) SELECT \'${title}\',\'${salary}\', d.id FROM department d WHERE d.name = ${dept}`, function (err, results) {
         console.log(`New role of ${title} added!`);
           
           });
     },
   
     addEmp(db,first, last, role, mgr){
-      db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id) SELECT ${first},${last}, r.id, ${mgr} FROM role r WHERE r.name = ${role}`, function (err, results) {
+      db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id) SELECT \'${first}\',\'${last}\', r.id, \'${mgr}\' FROM role r WHERE r.name = ${role}`, function (err, results) {
         console.log(`New employee ${first} ${last} added!`);
           
           });
@@ -71,7 +71,7 @@ const query = {
           });
     },
     updateEmpRole(db,emp,role){
-      db.query(`UPDATE employee SET role_id = r.id FROM employee e LEFT JOIN role r ON r.name = ${role} WHERE e.id = ${emp}`, function (err, results) {
+      db.query(`UPDATE employee SET role_id = r.id FROM employee e LEFT JOIN role r ON r.name = \'${role}\' WHERE e.id = \'${emp}\'`, function (err, results) {
           return results;
           
           });

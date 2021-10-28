@@ -77,13 +77,19 @@ const initQuestions = [
         name: 'roleSal',
         when: (answers) => answers.initChoice === 'add a role'
     },
+    // {
+    //     type: 'list',
+    //     message: 'Select the new role department: ',
+    //     name: 'roleDept',
+    //     choices: async () => {await db
+    //     Query.selectDeptNames},
+    //     // choices: (answers) =>  {Query.selectDeptNames(db)},
+    //     when: (answers) => answers.initChoice === 'add a role'
+    // },
     {
-        type: 'list',
-        message: 'Select the new role department: ',
+        type: 'input',
+        message: 'Enter the role department id: ',
         name: 'roleDept',
-        choices: async () => {await db
-        Query.selectDeptNames},
-        // choices: (answers) =>  {Query.selectDeptNames(db)},
         when: (answers) => answers.initChoice === 'add a role'
     },
     {
@@ -98,32 +104,56 @@ const initQuestions = [
         name: 'empLast',
         when: (answers) => answers.initChoice === 'add an employee'
     },
+    // {
+    //     type: 'list',
+    //     message: 'Select the new employee role: ',
+    //     name: 'empRole',
+    //     choices: Query.selectRoleNames(db),
+    //     when: (answers) => answers.initChoice === 'add a role'
+    // },
     {
-        type: 'list',
-        message: 'Select the new employee role: ',
+        type: 'input',
+        message: 'Enter the employee role id: ',
         name: 'empRole',
-        choices: Query.selectRoleNames(db),
-        when: (answers) => answers.initChoice === 'add a role'
+        when: (answers) => answers.initChoice === 'add an employee'
     },
+    // {
+    //     type: 'list',
+    //     message: 'Select the new employee manager: ',
+    //     name: 'empMgr',
+    //     choices: Query.selectEmpNames(db),
+    //     when: (answers) => answers.initChoice === 'add a role'
+    // },
     {
-        type: 'list',
-        message: 'Select the new employee manager: ',
+        type: 'input',
+        message: 'Enter the new employee manager id: ',
         name: 'empMgr',
-        choices: Query.selectEmpNames(db),
-        when: (answers) => answers.initChoice === 'add a role'
+        when: (answers) => answers.initChoice === 'add an employee'
     },
+    // {
+    //     type: 'list',
+    //     message: 'Update which employee?',
+    //     name: 'empToUpdate',
+    //     choices: Query.selectEmpNames(db),
+    //     when: (answers) => answers.initChoice === 'update an employee role'
+    // },
     {
-        type: 'list',
-        message: 'Update which employee?',
+        type: 'input',
+        message: 'Enter the employee id to update: ',
         name: 'empToUpdate',
-        choices: Query.selectEmpNames(db),
         when: (answers) => answers.initChoice === 'update an employee role'
     },
+    // {
+    //     type: 'list',
+    //     message: 'Update employee to which role?',
+    //     name: 'empNewRole',
+    //     choices: Query.selectRoleNames(db),
+    //     when: (answers) => answers.initChoice === 'update an employee role'
+    // },
     {
-        type: 'list',
-        message: 'Update employee to which role?',
+        type: 'input',
+        message: 'Enter the employee new role id: ',
         name: 'empNewRole',
-        choices: Query.selectRoleNames(db),
         when: (answers) => answers.initChoice === 'update an employee role'
     },
 ]
@@ -131,13 +161,13 @@ const initQuestions = [
 function init() {
     inquirer
         .prompt(initQuestions)
-        .then(async (data) => {
+        .then((data) => {
             if (data.initChoice === 'view all departments') {
                 //  let result = await Query.selectDepts(db);
                 // console.log("Res - q",result)
                 // return  await result
                 //    console.table(await result)
-                await Query.selectDepts(db)
+                Query.selectDepts(db)
                 //    return await result
                 // if(selection){
                 //  init()
@@ -157,7 +187,7 @@ function init() {
 
             }
         }).then(res => {
-            console.table(res)
+            // console.table(res)
             init()
         })
 
