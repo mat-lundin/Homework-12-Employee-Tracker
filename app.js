@@ -184,7 +184,7 @@ function init() {
             } else if (data.initChoice === 'add an employee') {
                 Query.addEmp(db, data.empFirst, data.empLast, data.empRole, data.empMgr[0])
             } else if (data.initChoice === 'update an employee role') {
-
+                Query.updateEmpRole(db,data.empToUpdate, data.empNewRole)
             }
         }).then(res => {
             // console.table(res)

@@ -71,8 +71,9 @@ const query = {
           });
     },
     updateEmpRole(db,emp,role){
-      db.query(`UPDATE employee SET role_id = r.id FROM employee e LEFT JOIN role r ON r.name = \'${role}\' WHERE e.id = \'${emp}\'`, function (err, results) {
-          return results;
+      console.log(`emp = ${emp}, role = ${role}`)
+      db.query(`UPDATE employee SET role_id = ${role} WHERE id = ${emp}`, function (err, results) {
+          console.log('Employee role updated!')
           
           });
     }
