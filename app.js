@@ -56,7 +56,7 @@ const initQuestions = [
         type: 'list',
         message: 'Choose an action',
         name: 'initChoice',
-        choices: ['view all departments', 'view all roles', 'view all employees', 'add a department', 'add a role', 'add an employee', 'update an employee role']
+        choices: ['view all departments', 'view all roles', 'view all employees', 'add a department', 'add a role', 'add an employee', 'update an employee role', 'quit']
 
     },
     {
@@ -185,6 +185,9 @@ function init() {
                 Query.addEmp(db, data.empFirst, data.empLast, data.empRole, data.empMgr[0])
             } else if (data.initChoice === 'update an employee role') {
                 Query.updateEmpRole(db,data.empToUpdate, data.empNewRole)
+            } else {
+                console.log(`Goodbye!`)
+                process.exit(0);
             }
         }).then(res => {
             // console.table(res)
